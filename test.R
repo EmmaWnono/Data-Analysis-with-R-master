@@ -15,4 +15,17 @@ round_date(x, "halfyear")
 round_date(x, "year")
 x <- ymd("2000-01-01")
 ceiling_date(x, "month")
+browser()
 ceiling_date(x, "month", change_on_boundary = TRUE)
+return(TRUE)
+
+
+library(profvis)
+library(bench)
+f <- function() {
+    pause(0.1)
+    g()
+    h()
+}
+source("profiling-example.R")
+profvis(f())
