@@ -28,4 +28,5 @@ f <- function() {
     h()
 }
 source("profiling-example.R")
+
 profvis(f())
