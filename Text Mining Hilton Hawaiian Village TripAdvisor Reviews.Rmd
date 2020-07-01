@@ -62,6 +62,16 @@ df %>%
   ggplot(aes(Week, n)) +
   geom_line() + 
   ggtitle('The Number of Reviews Per Week')
+
+layer1 <- df %>%
+    count(Week = round_date(review_date, "week"),
+          Year = round_date(review_date, "year")) %>%
+    ggplot(aes(Week, n)) +
+    geom_line() + 
+    ggtitle('The Number of Reviews Per Week')
+
+layer2 <- geom_line(aes(Year, n,colour="red")) 
+layer1+layer2  #图层叠加
 ```
 
 The highest numbers of weekly reviews were received at the end of 2014. The hotel received over 70 reviews in that week.
@@ -70,9 +80,11 @@ The highest numbers of weekly reviews were received at the end of 2014. The hote
 
 ```{r}
 df <- tibble::rowid_to_column(df, "ID")
+head(df)
 df <- df %>%
-  mutate(review_date = as.POSIXct(review_date, origin = "1970-01-01"),month = round_date(review_date, "month"))
-
+  mutate(review_date = as.POSIXct(review_date, origin = "1970-01-01"),
+         month = round_date(review_date, "month"))
+head(df)
 review_words <- df %>%
   distinct(review_body, .keep_all = TRUE) %>%
   unnest_tokens(word, review_body, drop = FALSE) %>%

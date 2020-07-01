@@ -22,11 +22,9 @@ return(TRUE)
 
 library(profvis)
 library(bench)
-f <- function() {
-    pause(0.1)
-    g()
-    h()
-}
-source("profiling-example.R")
-
-profvis(f())
+profvis::profvis({
+    x <- integer()
+    for (i in 1:1e4) {
+        x <- c(x, i)
+    }
+})
